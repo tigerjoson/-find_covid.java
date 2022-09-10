@@ -1,0 +1,39 @@
+
+package reference;
+
+import java.io.File;
+import org.odftoolkit.simple.TextDocument;
+import org.odftoolkit.simple.table.Cell;
+import org.odftoolkit.simple.table.Table;
+import org.odftoolkit.simple.text.list.List;
+
+public class createodtfile {
+	public static void main(String[] args) {
+		try {
+			File file = new File("C:\\Users\\tiger\\Desktop\\參考資料\\資訊note\\程式\\java_libreoffice\\helloworld");
+
+			TextDocument outputOdt = TextDocument.newTextDocument();
+
+			// add image
+			// outputOdt.newImage(file);
+
+			// add paragraph
+			outputOdt.addParagraph("Hello World, Hello Simple ODF!");
+
+			// add list
+			outputOdt.addParagraph("The following is a list.");
+			List list = outputOdt.addList();
+			String[] items = { "item1", "item2", "item3" };
+			list.addItems(items);
+
+			// add table
+			Table table = outputOdt.addTable(2, 2);
+			Cell cell = table.getCellByPosition(0, 0);
+			cell.setStringValue("Hello World!");
+
+			outputOdt.save(file.toString() + "\\yee.odt");
+		} catch (Exception e) {
+			System.err.println("ERROR: unable to create output file.");
+		}
+	}
+}
