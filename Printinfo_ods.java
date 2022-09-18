@@ -1,6 +1,8 @@
 package my_tool;
 
 import java.io.File;
+import java.util.ArrayList;
+
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Cell;
 import org.odftoolkit.simple.table.Table;
@@ -71,6 +73,19 @@ public class Printinfo_ods {
 		} else {
 			System.out.println("ods_file.exists()=" + getods_file().exists());
 		}
+	}
+	
+	public ArrayList<Cell> all_data(int index_of_shhet) throws Exception {
+		File file = getods_file();
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(file);
+		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_shhet);
+		ArrayList<Cell> arrayList= new ArrayList<Cell>() ;
+		for (int i = 0, j = 0; i < activetable.getColumnCount() || j < activetable.getRowCount(); i++, j++) {
+			Cell cell = activetable.getCellByPosition(i, j);
+			//System.out.println("cell.getDisplayText()=" + cell.getDisplayText());
+			arrayList.add(cell);
+		}
+		return arrayList;
 	}
 
 }
