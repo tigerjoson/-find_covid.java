@@ -5,9 +5,10 @@ import java.util.ArrayList;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Cell;
+import org.odftoolkit.simple.table.CellRange;
 import org.odftoolkit.simple.table.Table;
 
-public class access_ods {
+public class Access_ods {
 	private File ods_file;
 
 	public File getods_file() {
@@ -18,7 +19,7 @@ public class access_ods {
 		this.ods_file = ods_file;
 	}
 
-	public access_ods() {
+	public Access_ods() {
 	}
 
 	public void print_base_info() throws Exception {
@@ -87,6 +88,32 @@ public class access_ods {
 			arrayList.add(cell);
 		}
 		return arrayList;
+	}
+
+	public ArrayList<Cell> all_data() throws Exception {
+		File file = getods_file();
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(file);
+		Table activetable = spreadsheetDocument.getSheetByIndex(0);
+		ArrayList<Cell> arrayList = new ArrayList<Cell>();
+		for (int i = 0, j = 0; i < activetable.getColumnCount() || j < activetable.getRowCount(); i++, j++) {
+			Cell cell = activetable.getCellByPosition(i, j);
+			// System.out.println("cell.getDisplayText()=" + cell.getDisplayText());
+			arrayList.add(cell);
+		}
+		return arrayList;
+	}
+
+	public CellRange cellrange_data(int startCol, int startRow, int endCol, int endRow) throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		Table activetable = spreadsheetDocument.getSheetByIndex(0);
+
+		return activetable.getCellRangeByPosition(startCol, startRow, endCol, endRow);
+	}
+	public CellRange cellrange_data(int startCol, int startRow, int endCol, int endRow,int index_of_sheet) throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
+
+		return activetable.getCellRangeByPosition(startCol, startRow, endCol, endRow);
 	}
 
 }
