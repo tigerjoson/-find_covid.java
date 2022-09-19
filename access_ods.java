@@ -144,5 +144,21 @@ public class Access_ods {
 		}
 		spreadsheetDocument.save(output_file);
 	}
+	public void remove_cell(int index_of_sheet,int startcolumnIndex, int deleteColumnCount,int startrowIndex,int  deleterowCount ,File outputFile ) throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
+		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
+		activetable.removeRowsByIndex(startrowIndex, deleterowCount);
+	}
+	public void remove_column(int index_of_sheet,int startcolumnIndex, int deleteColumnCount,String outputFilestring ) throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
+		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
+		File file = new File(outputFilestring);
+		spreadsheetDocument.save(file);
+		System.out.println("finished");
+	}
+	
+
 
 }
