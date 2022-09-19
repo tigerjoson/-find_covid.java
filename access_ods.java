@@ -109,11 +109,40 @@ public class Access_ods {
 
 		return activetable.getCellRangeByPosition(startCol, startRow, endCol, endRow);
 	}
-	public CellRange cellrange_data(int startCol, int startRow, int endCol, int endRow,int index_of_sheet) throws Exception {
+
+	public CellRange cellrange_data(int startCol, int startRow, int endCol, int endRow, int index_of_sheet)
+			throws Exception {
 		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
 		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
 
 		return activetable.getCellRangeByPosition(startCol, startRow, endCol, endRow);
+	}
+
+	public SpreadsheetDocument spreadsheetDocument_object() throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		return spreadsheetDocument;
+	}
+
+	public void addtable(boolean isremove_first_sheet, File output_file, Table referenceTable,
+			String name_of_new_sheet) throws Exception {
+
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		spreadsheetDocument.appendSheet(referenceTable, name_of_new_sheet);
+		if (isremove_first_sheet) {
+			spreadsheetDocument.removeSheet(0);
+		}
+		spreadsheetDocument.save(output_file);
+	}
+
+	public void addtable(boolean isremove_first_sheet, String output_file_string, Table referenceTable,
+			String name_of_new_sheet) throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		File output_file = new File(output_file_string);
+		spreadsheetDocument.appendSheet(referenceTable, name_of_new_sheet);
+		if (isremove_first_sheet) {
+			spreadsheetDocument.removeSheet(0);
+		}
+		spreadsheetDocument.save(output_file);
 	}
 
 }
