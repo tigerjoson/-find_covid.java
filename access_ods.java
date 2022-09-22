@@ -17,6 +17,12 @@ public class Access_ods {
 
 	public void setods_file(File ods_file) {
 		this.ods_file = ods_file;
+		System.out.println(ods_file);
+	}
+
+	public void setods_file(String ods_file_String) {
+		File file = new File(ods_file_String);
+		this.ods_file = file;
 	}
 
 	public Access_ods() {
@@ -77,6 +83,22 @@ public class Access_ods {
 		}
 	}
 
+	public void print_cell(int colindex, int rowindex) throws Exception {
+		if (getods_file().exists()) {
+
+			SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+			// beging from zero
+			Table activetable = spreadsheetDocument.getSheetByIndex(0);
+
+			Cell cell = activetable.getCellByPosition(colindex, rowindex);
+			System.out.println("cell.getDisplayText()=" + cell.getDisplayText());
+			System.out.println(activetable.getTableName());
+
+		} else {
+			System.out.println("ods_file.exists()=" + getods_file().exists());
+		}
+	}
+
 	public ArrayList<Cell> all_data(int index_of_shhet) throws Exception {
 		File file = getods_file();
 		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(file);
@@ -123,8 +145,8 @@ public class Access_ods {
 		return spreadsheetDocument;
 	}
 
-	public void addtable(boolean isremove_first_sheet, File output_file, Table referenceTable,
-			String name_of_new_sheet) throws Exception {
+	public void addtable(boolean isremove_first_sheet, File output_file, Table referenceTable, String name_of_new_sheet)
+			throws Exception {
 
 		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
 		spreadsheetDocument.appendSheet(referenceTable, name_of_new_sheet);
@@ -144,13 +166,27 @@ public class Access_ods {
 		}
 		spreadsheetDocument.save(output_file);
 	}
-	public void remove_cell(int index_of_sheet,int startcolumnIndex, int deleteColumnCount,int startrowIndex,int  deleterowCount ,File outputFile ) throws Exception {
+
+	public void remove_cell(int index_of_sheet, int startcolumnIndex, int deleteColumnCount, int startrowIndex,
+			int deleterowCount, File outputFile) throws Exception {
 		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
 		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
 		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
 		activetable.removeRowsByIndex(startrowIndex, deleterowCount);
 	}
-	public void remove_column(int index_of_sheet,int startcolumnIndex, int deleteColumnCount,String outputFilestring ) throws Exception {
+
+	public void remove_cell(int index_of_sheet, int startcolumnIndex, int deleteColumnCount, int startrowIndex,
+			int deleterowCount, String outputfile) throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
+		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
+		activetable.removeRowsByIndex(startrowIndex, deleterowCount);
+		File file = new File(outputfile);
+		spreadsheetDocument.save(file);
+	}
+
+	public void remove_column(int index_of_sheet, int startcolumnIndex, int deleteColumnCount, String outputFilestring)
+			throws Exception {
 		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
 		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
 		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
@@ -158,7 +194,15 @@ public class Access_ods {
 		spreadsheetDocument.save(file);
 		System.out.println("finished");
 	}
-	
 
+	public void remove_row(int index_of_sheet, int startrowindex, int deleterowCount, String outputFilestring)
+			throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
+		activetable.removeColumnsByIndex(startrowindex, deleterowCount);
+		File file = new File(outputFilestring);
+		spreadsheetDocument.save(file);
+		System.out.println("finished");
+	}
 
 }
