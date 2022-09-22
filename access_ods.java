@@ -17,7 +17,7 @@ public class Access_ods {
 
 	public void setods_file(File ods_file) {
 		this.ods_file = ods_file;
-		System.out.println(ods_file);
+		// System.out.println(ods_file);
 	}
 
 	public void setods_file(String ods_file_String) {
@@ -191,6 +191,15 @@ public class Access_ods {
 		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
 		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
 		File file = new File(outputFilestring);
+		spreadsheetDocument.save(file);
+		System.out.println("finished");
+	}
+
+	public void remove_column(int index_of_sheet, int startcolumnIndex, int deleteColumnCount, File file)
+			throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
+		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
 		spreadsheetDocument.save(file);
 		System.out.println("finished");
 	}
