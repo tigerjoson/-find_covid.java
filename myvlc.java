@@ -16,7 +16,7 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 public class myvlc extends JFrame {
    private static final long serialVersionUID = 1L;
    private static final String TITLE = "My First Media Player";
-   private static final String VIDEO_PATH = "C:\\Users\\tiger\\Desktop\\20220918143247_000016.MP4";
+   private static final String VIDEO_PATH = "C:\\Users\\xxx.MP4";
    private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
    private JButton playButton;
 
