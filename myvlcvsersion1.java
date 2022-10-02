@@ -19,7 +19,7 @@ public class myvlcvsersion1 extends JFrame implements ActionListener, WindowList
 	public JButton jButton_play, jButton_pause;
 	public JToolBar jToolBar;
 	public EmbeddedMediaPlayerComponent embeddedMediaPlayerComponent;
-	public static String path_string ="C:\\\\Users\\\\tiger\\\\Desktop\\\\20220918143247_000016.MP4"; 
+	public static String path_string ="C:\\xxx\\yy.MP4"; 
 
 	public static void main(String[] args) throws Exception {
 		myvlcvsersion1 myplayer = new myvlcvsersion1();
