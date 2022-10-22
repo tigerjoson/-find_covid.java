@@ -23,7 +23,7 @@ public class Renaming_video implements ActionListener {
 	public JFrame basic_frame;
 	public Getfileproperties getfileproperties;
 
-	static final  String wanttoremoveString_reg = "(Baha)|(WEB-DL)|(Ohys-Raws)|(BIG5)|(AT\\-X)|(Nekomoe kissaten)|(1080p)|(1080P)|\\[|\\]";
+	static final  String wanttoremoveString_reg = "(Lilith-Raws)|(Baha)|(WEB-DL)|(Ohys-Raws)|(BIG5)|(AT\\-X)|(Nekomoe kissaten)|(1080p)|(1080P)|\\[|\\]";
 	public Renaming_video() {
 		basic_frame = new JFrame("rename");
 		basic_frame.setBounds(100, 100, 450, 300);
@@ -48,7 +48,7 @@ public class Renaming_video implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		jFileChooser = new JFileChooser("C:\\XX\\XX");
+		jFileChooser = new JFileChooser("C:\XX\\XX");
 		jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int return_value = jFileChooser.showOpenDialog(basic_frame);
 
@@ -62,7 +62,11 @@ public class Renaming_video implements ActionListener {
 			for(int i=0;i<files.length;i++) {
 				String full_nameString= selectedfile.getAbsolutePath().concat("\\").concat(files[i]);
 				String clean_nameString= full_nameString.replaceAll(wanttoremoveString_reg, "");
-				System.out.println("full_nameString="+full_nameString);
+				
+				File rename_file = new File(full_nameString);
+				
+				rename_file.renameTo(new File(clean_nameString));
+//				System.out.println("full_nameString="+full_nameString);
 				System.out.println("clean_nameString="+clean_nameString);
 			}
 
