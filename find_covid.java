@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
 
 public class find_covid{
 	public static void main(String[] args) throws IOException {
-		String test_file ="C:\\Users\\tiger\\Desktop\\Day_Confirmation_Age_County_Gender_19CoV.csv";
+		String test_file ="C:\\XX\\Day_Confirmation_Age_County_Gender_19CoV.csv";
 		InputStream inputStream = new FileInputStream(test_file);
 		InputStreamReader isr = new InputStreamReader(inputStream);
 		BufferedReader bReader = new BufferedReader(isr);
-		FileWriter fWriter = new FileWriter("C:\\Users\\tiger\\Desktop\\temp\\新北市_6月_永和區非境外.csv");
+		FileWriter fWriter = new FileWriter("C:\\XX\\新北市_6月_永和區非境外.csv");
 		BufferedWriter bWriter =new BufferedWriter(fWriter);
 		try{
 			String line ;
