@@ -41,7 +41,7 @@ public class file_RW {
 		File file = new File(path);
 		String[] file_liSt = file.list();
 		// write file location
-		String temp_file = "C:\\Users\\tiger\\Desktop\\temp\\";
+		String temp_file = "C:\\XX\\XX";
 //		filename
 		String file_name = file.getName().concat("_before_soting");
 		String document_extension = file_name.concat(".txt");
