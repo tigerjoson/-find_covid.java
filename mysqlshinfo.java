@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
-public class myfirstmysql {
+public class mysqlshinfo{
 
 	public static void main(String[] args) throws Exception {
 		// load driver
@@ -15,22 +15,23 @@ public class myfirstmysql {
 		String hostString ="127.0.0.1:";
 		String portnumberString ="3306";
 		String  mysqlString =  "jdbc:mysql://";
-		String databasenameString = "/databasename";
-		String usernameString = "";
-		String passwordString = "";
+		String databasenameString = "/girl_front_line";
+		String usernameString = " ";
+		String passwordString = " ";
 		// DB location => jdbc:mysql://hostname:port/databasename
 		// jdbc:mysql://localhost:3306/mydb == jdbc:mysql://127.0.0.1:3306/mydb
 		Connection conn = DriverManager.getConnection(mysqlString+hostString+portnumberString+databasenameString,usernameString,passwordString );
 		Statement stat = conn.createStatement();
 		
-//		ResultSet resultSet = stat.executeQuery("Select * From number_and_lv");	
-		ResultSet resultSet = stat.executeQuery("show full tables");
+		ResultSet resultSet = stat.executeQuery("Select * From number_and_lv");	
+		
 		ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 		System.out.println("number of column = " + resultSetMetaData.getColumnCount());
 		while (resultSet.next()) {
-			System.out.print("row="+resultSet.getRow()+",");
+//			System.out.print("row="+resultSet.getRow()+",");
 			for (int i=1;i<=resultSetMetaData.getColumnCount();i++) {
-				System.out.print("column label="+resultSetMetaData.getColumnLabel(i)+",");
+//				System.out.print("column label="+resultSetMetaData.getColumnLabel(i)+",");
+//				System.out.print(resultSetMetaData.getColumnLabel(i)+",");
 //				System.out.println(i+","+"ColumnLabel="+resultSetMetaData.getColumnLabel(i));
 				System.out.print(resultSet.getString(i)+",");
 			}
