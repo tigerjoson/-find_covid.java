@@ -1,26 +1,45 @@
 package my_tool;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class file_RW {
-	static void copy(String source_path, String destination_folder) throws IOException {
+public class File_RW {
+
+	private File file;
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public void setFile(String fileString) {
+		this.file = new File(fileString);
+	}
+
+	public void copy(String source_path, String destination_folder) throws IOException {
 		try {
 			int line_number = 0;
 			InputStream inputStream = new FileInputStream(source_path);
 			InputStreamReader isr = new InputStreamReader(inputStream);
 			BufferedReader bReader = new BufferedReader(isr);
 			FileWriter fWriter = new FileWriter(destination_folder);
-			BufferedWriter bWriter =new BufferedWriter(fWriter);
+			BufferedWriter bWriter = new BufferedWriter(fWriter);
 			String line;
 			while ((line = bReader.readLine()) != null) {
 //				System.out.println(line.length());
-			//System.out.println(line_number);
+				// System.out.println(line_number);
 				line_number++;
-				//System.out.println(line);
-					bWriter.write(line + "\r\n");
+				// System.out.println(line);
+				bWriter.write(line + "\r\n");
 			}
 			bReader.close();
 			inputStream.close();
@@ -33,15 +52,42 @@ public class file_RW {
 		}
 	}
 
-	public void write_file_info() {
+	public int getnumberofline() throws Exception {
+		InputStream inputStream = new FileInputStream(this.getFile());
+		InputStreamReader isr = new InputStreamReader(inputStream);
+		BufferedReader bReader = new BufferedReader(isr);
+		ArrayList<String> arrayList = new ArrayList<>();
+		String line;
+		int i = 0;
+		while ((line = bReader.readLine()) != null) {
+			i++;
+		}
+		return i;
 	}
 
-	public static void write_file_info(String path) throws IOException {
-		
+	public Object[] getcontents() throws Exception {
+		InputStream inputStream = new FileInputStream(this.getFile());
+		InputStreamReader isr = new InputStreamReader(inputStream);
+		BufferedReader bReader = new BufferedReader(isr);
+		ArrayList<String> arrayList = new ArrayList<>();
+		String line;
+		while ((line = bReader.readLine()) != null) {
+			arrayList.add(line);
+		}
+
+		bReader.close();
+		inputStream.close();
+		isr.close();
+		return arrayList.toArray();
+	}
+
+	public void write_folder_info() throws Exception {
+		String path = this.getFile().getParent();
 		File file = new File(path);
+
 		String[] file_liSt = file.list();
 		// write file location
-		String temp_file = "C:\\XX\\XX";
+		String temp_file = "C:\\Users\\tiger\\Desktop\\notepad++backup\\";
 //		filename
 		String file_name = file.getName().concat("_before_soting");
 		String document_extension = file_name.concat(".txt");
@@ -54,7 +100,6 @@ public class file_RW {
 		if (filecanread && isdir) {
 			for (int index = 0; index < file.listFiles().length; index++) {
 				// for cast
-				
 				File f = new File(file_liSt[index]);
 				String string = file_name.toString();
 //				System.out.println(f.isDirectory());
@@ -66,11 +111,11 @@ public class file_RW {
 				bufferedWriter.write(",");
 				bufferedWriter.write(file_liSt[index]);
 
-				String file_full_name = path.concat(file_liSt[index]);
+				String file_full_name = file.getPath().concat(file_liSt[index]);
 				Path path_one_file = Paths.get(file_full_name);
 				Long file_size = Files.size(path_one_file);
 
-				bufferedWriter.write("," + file_size + "�줸��");
+				bufferedWriter.write("," + file_size);
 				bufferedWriter.newLine();
 
 			}
@@ -79,22 +124,23 @@ public class file_RW {
 			bufferedWriter.close();
 			fileWriter.close();
 		} else {
-			System.out.println("file canread:"+filecanread);
-			System.out.println("is directory:"+isdir);
+			System.out.println("file canread:" + filecanread);
+			System.out.println("is directory:" + isdir);
 		}
 
 	}
-	static void print_to_screen(String file_path,int columns) throws IOException {
+
+	public void print_to_screen(String file_path, int columns) throws IOException {
 		try {
 			int line_number = 0;
 			FileReader fReader = new FileReader(file_path);
 			BufferedReader bReader = new BufferedReader(fReader);
 			String line;
-		//	System.out.println("encode="+fReader.getEncoding());
+			// System.out.println("encode="+fReader.getEncoding());
 			while ((line = bReader.readLine()) != null) {
 				line_number++;
-				if(line_number<=columns) {
-					System.out.println(line_number);
+				if (line_number <= columns) {
+					System.out.print(line_number + ",");
 					System.out.println(line);
 				}
 			}
@@ -104,14 +150,15 @@ public class file_RW {
 			e.printStackTrace();
 		}
 	}
-	
-	static void print_to_screen(String file_path) throws IOException {
+
+	public void print_to_screen() throws IOException {
 		try {
+			String file_path = this.getFile().toString();
 			int line_number = 0;
 			FileReader fReader = new FileReader(file_path);
 			BufferedReader bReader = new BufferedReader(fReader);
 			String line;
-			//System.out.println("encode="+fReader.getEncoding());
+			// System.out.println("encode="+fReader.getEncoding());
 			while ((line = bReader.readLine()) != null) {
 				line_number++;
 				System.out.println(line_number);
@@ -123,9 +170,10 @@ public class file_RW {
 			e.printStackTrace();
 		}
 	}
-	
+
 //look specified file 
-	static void Show_file_info(String file_path) {
+	public void Show_file_info() {
+		String file_path = this.getFile().toString();
 		File file = new File(file_path);
 		System.out.println("canExecute=" + file.canExecute());
 		System.out.println("canRead=" + file.canRead());
@@ -133,27 +181,29 @@ public class file_RW {
 		System.out.println("exit=" + file.exists());
 	}
 
-	static void remove_string(String source_path,String destination_folder) throws IOException {
+	public void remove_string(String destination, String oldString, String newString) throws IOException {
 		try {
-			int line_number = 0;
-			int ascii_num;
-			char ch;
-			//read
-			InputStream inputStream = new FileInputStream(source_path);
-			InputStreamReader isr = new InputStreamReader(inputStream,"gbk");
+			File f = this.getFile();
+
+			// read
+			InputStream inputStream = new FileInputStream(f.toString());
+			InputStreamReader isr = new InputStreamReader(inputStream);
 			BufferedReader bReader = new BufferedReader(isr);
-			//write
-			OutputStream outputStream = new FileOutputStream(destination_folder);
-			OutputStreamWriter osr = new OutputStreamWriter(outputStream,"gbk");
+			// write
+			OutputStream outputStream = new FileOutputStream(destination);
+			OutputStreamWriter osr = new OutputStreamWriter(outputStream);
 			BufferedWriter bWriter = new BufferedWriter(osr);
 			String line;
-			
 
-			//per line
-			while((line=bReader.readLine())!=null){
-				
-					
-				
+			// per line
+			while ((line = bReader.readLine()) != null) {
+				Pattern p = Pattern.compile(oldString);
+				Matcher m = p.matcher(line);
+
+				if (m.find()) {
+					bWriter.write(line.replaceAll(oldString, newString));
+					bWriter.newLine();
+				}
 			}
 			bReader.close();
 			inputStream.close();
@@ -165,4 +215,5 @@ public class file_RW {
 			e.printStackTrace();
 		}
 	}
+
 }
