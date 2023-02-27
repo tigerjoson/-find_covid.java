@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.w3c.dom.Node;
+
 public class File_RW {
 
 	private File file;
+	private String folderpathString; 
 
 	public File getFile() {
 		return file;
@@ -56,10 +59,9 @@ public class File_RW {
 		InputStream inputStream = new FileInputStream(this.getFile());
 		InputStreamReader isr = new InputStreamReader(inputStream);
 		BufferedReader bReader = new BufferedReader(isr);
-		ArrayList<String> arrayList = new ArrayList<>();
-		String line;
+		
 		int i = 0;
-		while ((line = bReader.readLine()) != null) {
+		while ( bReader.readLine() != null) {
 			i++;
 		}
 		return i;
@@ -81,17 +83,14 @@ public class File_RW {
 		return arrayList.toArray();
 	}
 
-	public void write_folder_info() throws Exception {
-		String path = this.getFile().getParent();
-		File file = new File(path);
-
+	public void write_folder_info(String folderString,String write_info_loation_folder) throws Exception {
+		File file = new File(folderString);
 		String[] file_liSt = file.list();
 		// write file location
-		String temp_file = "C:\\Users\\tiger\\Desktop\\notepad++backup\\";
-//		filename
+		//		filename
 		String file_name = file.getName().concat("_before_soting");
 		String document_extension = file_name.concat(".txt");
-		String full_destination = temp_file.concat(document_extension);
+		String full_destination = write_info_loation_folder.concat(document_extension);
 		// write file's txt file
 		FileWriter fileWriter = new FileWriter(full_destination);
 		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -130,6 +129,20 @@ public class File_RW {
 
 	}
 
+	
+	public ArrayList<String> get_all_files(String folderString) {
+		File file = new File(folderString);
+		String[] file_listStrings = file.list();
+		String absolutePathString= file.getAbsolutePath();
+		ArrayList<String> arrayList = new ArrayList<String>();
+		for(int i=0; i< file_listStrings.length ;i++) {
+			String fullfilenameString = absolutePathString.concat("\\"+file_listStrings[i]);
+			System.out.println(fullfilenameString);
+			arrayList.add(fullfilenameString);
+		}
+		return arrayList;
+	}
+	
 	public void print_to_screen(String file_path, int columns) throws IOException {
 		try {
 			int line_number = 0;
@@ -214,6 +227,25 @@ public class File_RW {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void print_node_info(Node node) {
+		System.out.println("node.getLocalName()="+node.getLocalName());
+		System.out.println("node.getNodetype()="+node.getNodeType());
+		System.out.println("node.getNodeName()="+node.getNodeName());
+		System.out.println("NamedNodeMap=node.getAttributes()="+node.getAttributes());
+		System.out.println("node.getTextContent()= "+node.getTextContent());
+		for(int i=0;i<node.getAttributes().getLength();i++) {
+			System.out.println(node.getAttributes().item(i));
+		}
+	}
+
+	public String getFolderpathString() {
+		return folderpathString;
+	}
+
+	public void setFolderpathString(String folderpathString) {
+		this.folderpathString = folderpathString;
 	}
 
 }
