@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class findexam_keywords_string {
 	public static void main(String[] args) throws Exception {
 		File_RW file_RW = new File_RW();
-		String readfolderparhString = "C:\\Users\\tiger\\Desktop\\參考資料\\內部控制\\38期\\";
+		String readfolderparhString = "folder_path";
 		file_RW.setFolderpathString(readfolderparhString);
 		ArrayList<String> arrayList = file_RW.get_all_files(file_RW.getFolderpathString());
 		for (int i = 0; i < arrayList.size(); i++) {
