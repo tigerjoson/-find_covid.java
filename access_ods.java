@@ -1,4 +1,4 @@
-package my_tool;
+package myodf;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,6 +31,28 @@ public class Access_ods {
 	public void print_base_info() throws Exception {
 		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
 		Table activetable = spreadsheetDocument.getSheetByIndex(0);
+		System.out.println("spreadsheetDocument.getTableList().size()=" + spreadsheetDocument.getTableList().size());
+		System.out.println("activetable_name= " + activetable.getTableName());
+		System.out.println("activetable.getHeaderColumnCount()=" + activetable.getHeaderColumnCount());
+		System.out.println("activetable.getColumnCount()=" + activetable.getColumnCount());
+		System.out.println("activetable.getRowCount()=" + activetable.getRowCount());
+
+	}
+
+	public void print_base_info(int Sheetindex_startfrom0) throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		Table activetable = spreadsheetDocument.getSheetByIndex(Sheetindex_startfrom0);
+		System.out.println("spreadsheetDocument.getTableList().size()=" + spreadsheetDocument.getTableList().size());
+		System.out.println("activetable_name= " + activetable.getTableName());
+		System.out.println("activetable.getHeaderColumnCount()=" + activetable.getHeaderColumnCount());
+		System.out.println("activetable.getColumnCount()=" + activetable.getColumnCount());
+		System.out.println("activetable.getRowCount()=" + activetable.getRowCount());
+
+	}
+
+	public void print_base_info(String Sheet_name) throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
+		Table activetable = spreadsheetDocument.getSheetByName(Sheet_name);
 		System.out.println("spreadsheetDocument.getTableList().size()=" + spreadsheetDocument.getTableList().size());
 		System.out.println("activetable_name= " + activetable.getTableName());
 		System.out.println("activetable.getHeaderColumnCount()=" + activetable.getHeaderColumnCount());
@@ -125,19 +147,23 @@ public class Access_ods {
 		return arrayList;
 	}
 
-	public CellRange cellrange_data(int startCol, int startRow, int endCol, int endRow) throws Exception {
-		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
-		Table activetable = spreadsheetDocument.getSheetByIndex(0);
+	public void copydata(int Sheetindex_startfrom0_containtable, int startcol, int startrow, int endcol, int endrow,
+			String newSheetname, String filename) throws Exception {
+		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(this.getods_file());
+		Table table = spreadsheetDocument.getSheetByIndex(Sheetindex_startfrom0_containtable);
+		CellRange dataCellRange = table.getCellRangeByPosition(startcol, startrow, endcol, endrow);
+		spreadsheetDocument.appendSheet(newSheetname);
+		Table activeTable = spreadsheetDocument.getSheetByName(newSheetname);
 
-		return activetable.getCellRangeByPosition(startCol, startRow, endCol, endRow);
-	}
+		for (int row = 0; row < dataCellRange.getRowNumber(); row++) {
+			for (int col = 0; col < dataCellRange.getColumnNumber(); col++) {
+				activeTable.getCellByPosition(col, row)
+						.setDisplayText(table.getCellByPosition(col, row).getDisplayText());
+			}
+		}
+		spreadsheetDocument.save(filename);
+		System.out.println("finish~!");
 
-	public CellRange cellrange_data(int startCol, int startRow, int endCol, int endRow, int index_of_sheet)
-			throws Exception {
-		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
-		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
-
-		return activetable.getCellRangeByPosition(startCol, startRow, endCol, endRow);
 	}
 
 	public SpreadsheetDocument spreadsheetDocument_object() throws Exception {
@@ -173,6 +199,7 @@ public class Access_ods {
 		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
 		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
 		activetable.removeRowsByIndex(startrowIndex, deleterowCount);
+		spreadsheetDocument.save(outputFile);
 	}
 
 	public void remove_cell(int index_of_sheet, int startcolumnIndex, int deleteColumnCount, int startrowIndex,
@@ -185,20 +212,20 @@ public class Access_ods {
 		spreadsheetDocument.save(file);
 	}
 
-	public void remove_column(int index_of_sheet, int startcolumnIndex, int deleteColumnCount, String outputFilestring)
-			throws Exception {
+	public void remove_column(int index_of_sheet_start_from0, int startcolumnIndex, int deleteColumnCount,
+			String outputFilestring) throws Exception {
 		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
-		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
+		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet_start_from0);
 		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
 		File file = new File(outputFilestring);
 		spreadsheetDocument.save(file);
 		System.out.println("finished");
 	}
 
-	public void remove_column(int index_of_sheet, int startcolumnIndex, int deleteColumnCount, File file)
+	public void remove_column(int index_of_sheet_start_from0, int startcolumnIndex, int deleteColumnCount, File file)
 			throws Exception {
 		SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(getods_file());
-		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet);
+		Table activetable = spreadsheetDocument.getSheetByIndex(index_of_sheet_start_from0);
 		activetable.removeColumnsByIndex(startcolumnIndex, deleteColumnCount);
 		spreadsheetDocument.save(file);
 		System.out.println("finished");
