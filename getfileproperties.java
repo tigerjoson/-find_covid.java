@@ -1,14 +1,14 @@
-package my_tool;
+package mytool;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class getfileproperties {
+public class Getfileproperties {
 
-	public getfileproperties() {
+	public Getfileproperties() {
 	}
 
-	public String getFile_string() {
+	public String GetFile_string() {
 		return file_string;
 	}
 
@@ -18,7 +18,7 @@ public class getfileproperties {
 
 	private String file_string;
 
-	File file = new File(getFile_string());
+	File file = new File(GetFile_string());
 
 	public int numer_of_files() {
 		int numer_of_files = file.list().length;
