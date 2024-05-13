@@ -42,9 +42,9 @@ public class myexceltocsv {
 			String departnameString = oriworkbook.getSheetAt(0).getRow(i).getCell(1).toString();
 			String Brand_name =  oriworkbook.getSheetAt(0).getRow(i).getCell(2).toString();
 			
-			XSSFCell casenumbercCell =  oriworkbook.getSheetAt(0).getRow(i).getCell(3);
-			
 			//using formater to read from xlsx
+			// read numeric strings in Excel cells as string
+			XSSFCell casenumbercCell =  oriworkbook.getSheetAt(0).getRow(i).getCell(3);
 			String casenumberString = poiFormatter.formatCellValue(casenumbercCell);
 			
 			String hardiskserialnumber =  oriworkbook.getSheetAt(0).getRow(i).getCell(4).toString();
