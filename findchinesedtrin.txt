@@ -1,0 +1,10 @@
+//win11 copilot
+public class FindCharacter {
+    public static void main(String[] args) {
+        String text = "這是一個測試，包含化字";
+        char targetChar = '化';
+
+        boolean containsChar = text.contains(String.valueOf(targetChar));
+        System.out.println("Contains '化': " + containsChar);
+    }
+}
